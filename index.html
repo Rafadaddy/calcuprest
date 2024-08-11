@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="es">
 
 <head>
@@ -123,7 +122,7 @@
     <div class="container">
         <h1>Calculadora de Préstamos</h1>
         <label for="amount">Monto a Prestar:</label>
-        <input type="number" id="amount" placeholder="Ingrese el monto" required>
+        <input type="text" id="amount" placeholder="Ingrese el monto" required oninput="formatAmount(this)">
 
         <label for="interest">Tasa de Interés (% mensual):</label>
         <input type="number" id="interest" value="10" placeholder="Ingrese la tasa de interés" required>
@@ -147,15 +146,22 @@
             return `MX$ ${amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
         }
 
+        function formatAmount(input) {
+            // Remover caracteres no numéricos
+            let value = input.value.replace(/[^0-9]/g, '');
+            // Formatear con comas
+            input.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
         function calculateLoan() {
-            const amount = parseFloat(document.getElementById('amount').value);
-            const interestRate = parseFloat(document.getElementById('interest').value) / 100; // Tasa de interés ingresada
+            const amount = parseFloat(document.getElementById('amount').value.replace(/,/g, '')); // Remover comas
+            const interestRate = parseFloat(document.getElementById('interest').value) / 100;
             const weeks = parseInt(document.getElementById('weeks').value);
-            const months = weeks / 4; // Aproximación de semanas a meses
+            const months = weeks / 4;
 
             const totalInterest = amount * interestRate * months;
             const totalAmount = amount + totalInterest;
-            const weeklyPayment = totalAmount / weeks; // Pago semanal
+            const weeklyPayment = totalAmount / weeks;
 
             document.getElementById('result').innerHTML = 
                 `Total a Pagar: <span class="highlight">${formatCurrency(totalAmount)}</span><br>` +

@@ -1,2 +1,2 @@
 # calcuprest
-calculadora de prestamos 
+calculadora prestame 

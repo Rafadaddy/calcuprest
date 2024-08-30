@@ -103,6 +103,16 @@
             color: #4CAF50;  
         }  
 
+        .highlight-payment {  
+            font-weight: bold;  
+            color: #fff;  
+            background-color: #FF5722; /* Color de fondo más llamativo */  
+            padding: 10px;  
+            border-radius: 5px;  
+            font-size: 1.3em; /* Aumentar tamaño de fuente */  
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Sombra para resaltar */  
+        }  
+
         ul {  
             margin-top: 10px;  
             padding-left: 20px;  
@@ -141,9 +151,9 @@
     <div class="container">  
         <h1>Calculadora de Préstamos</h1>  
         
-         <!-- Contenedor para la fecha actual -->  
         <div id="current-date" style="text-align: center; font-size: 1.2em; margin-bottom: 20px;"></div>  
         
+  
 
         <label for="amount">Monto a Prestar:</label>  
         <input type="text" id="amount" placeholder="Ingrese el monto" required oninput="formatAmount(this)">  
@@ -154,10 +164,8 @@
         <label for="weeks">Número de Semanas:</label>  
         <input type="number" id="weeks" placeholder="Ingrese el número de semanas" required>  
 
-        
-        <!-- Campo para seleccionar una fecha -->  
-        <label for="dateInput">Seleccionar Fecha:</label>  
-        <input type="date" id="dateInput" onchange="updateDate()">  
+<label for="dateInput">Seleccionar Fecha:</label>  
+        <input type="date" id="dateInput" onchange="updateDate()"> 
 
         <button onclick="calculateLoan()">Calcular</button>  
         <button onclick="exportToPDF()">Exportar a PDF</button>  
@@ -173,7 +181,6 @@
     <script>  
         let selectedDate;  
 
-        // Mostrar la fecha actual  
         function displayCurrentDate() {  
             const today = new Date();  
             selectedDate = today; // Inicializar con la fecha actual  
@@ -196,14 +203,12 @@
         }  
 
         function formatAmount(input) {  
-            // Remover caracteres no numéricos  
             let value = input.value.replace(/[^0-9]/g, '');  
-            // Formatear con comas  
             input.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");  
         }  
 
         function calculateLoan() {  
-            const amount = parseFloat(document.getElementById('amount').value.replace(/,/g, '')); // Remover comas  
+            const amount = parseFloat(document.getElementById('amount').value.replace(/,/g, ''));  
             const interestRate = parseFloat(document.getElementById('interest').value) / 100;  
             const weeks = parseInt(document.getElementById('weeks').value);  
             const months = weeks / 4;  
@@ -215,7 +220,7 @@
             document.getElementById('result').innerHTML =   
                 `Total a Pagar: <span class="highlight">${formatCurrency(totalAmount)}</span><br>` +  
                 `Interés Cobrado: <span class="highlight">${formatCurrency(totalInterest)}</span><br>` +  
-                `Pago Semanal: <span class="highlight">${formatCurrency(weeklyPayment)}</span><br>` +  
+                `Pago Semanal: <span class="highlight-payment">${formatCurrency(weeklyPayment)}</span><br>` +  
                 `Tasa de Interés: <span class="highlight">${(interestRate * 100).toFixed(2)}%</span> mensual`;  
 
             generatePaymentSchedule(weeks);  
@@ -227,7 +232,7 @@
             
             for (let i = 1; i <= weeks; i++) {  
                 const paymentDate = new Date(selectedDate);  
-                paymentDate.setDate(selectedDate.getDate() + (i * 7)); // Sumar 7 días por cada semana  
+                paymentDate.setDate(selectedDate.getDate() + (i * 7));  
                 paymentSchedule.innerHTML += `<li class="payment-item">Pago ${i}: ${paymentDate.toLocaleDateString()}</li>`;  
             }  
         }  
@@ -250,7 +255,6 @@
             doc.save('prestamo_detalles.pdf');  
         }  
 
-        // Llamar a la función para mostrar la fecha actual al cargar la página  
         window.onload = displayCurrentDate;  
     </script>  
 

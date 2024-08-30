@@ -141,12 +141,9 @@
     <div class="container">  
         <h1>Calculadora de Préstamos</h1>  
         
-        <!-- Contenedor para la fecha actual -->  
+         <!-- Contenedor para la fecha actual -->  
         <div id="current-date" style="text-align: center; font-size: 1.2em; margin-bottom: 20px;"></div>  
         
-        <!-- Campo para seleccionar una fecha -->  
-        <label for="dateInput">Seleccionar Fecha:</label>  
-        <input type="date" id="dateInput" onchange="updateDate()">  
 
         <label for="amount">Monto a Prestar:</label>  
         <input type="text" id="amount" placeholder="Ingrese el monto" required oninput="formatAmount(this)">  
@@ -156,6 +153,11 @@
 
         <label for="weeks">Número de Semanas:</label>  
         <input type="number" id="weeks" placeholder="Ingrese el número de semanas" required>  
+
+        
+        <!-- Campo para seleccionar una fecha -->  
+        <label for="dateInput">Seleccionar Fecha:</label>  
+        <input type="date" id="dateInput" onchange="updateDate()">  
 
         <button onclick="calculateLoan()">Calcular</button>  
         <button onclick="exportToPDF()">Exportar a PDF</button>  
@@ -186,7 +188,7 @@
 
         function updateDateDisplay() {  
             const options = { year: 'numeric', month: 'long', day: 'numeric' };  
-            document.getElementById('current-date').innerText = `Fecha Seleccionada: ${selectedDate.toLocaleDateString('es-MX', options)}`;  
+            document.getElementById('current-date').innerText = `Fecha Actual: ${selectedDate.toLocaleDateString('es-MX', options)}`;  
         }  
 
         function formatCurrency(amount) {  

@@ -1,210 +1,257 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html>  
+<html lang="es">  
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Préstamos MX</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Georgia:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background: linear-gradient(to right, #e0eafc, #cfdef3);
-            margin: 0;
-            padding: 20px;
-        }
-        h1 {
-            color: #333;
-            text-align: center;
-            margin-bottom: 20px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-        }
-        .container {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            padding: 30px;
-            max-width: 600px;
-            margin: auto;
-            transition: transform 0.2s;
-        }
-        .container:hover {
-            transform: scale(1.02);
-        }
-        label {
-            font-weight: bold;
-            margin-top: 10px;
-            display: block;
-            color: #555;
-        }
-        input {
-            margin: 10px 0;
-            padding: 12px;
-            width: 100%;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-            transition: border-color 0.3s;
-            font-size: 1.2em;
-        }
-        input:focus {
-            border-color: #4CAF50;
-            outline: none;
-        }
-        button {
-            padding: 12px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .result {
-            background-color: #e7f3fe;
-            border-left: 6px solid #2196F3;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            font-family: 'Georgia', serif;
-        }
-        .result h2 {
-            margin: 0;
-            font-size: 1.5em;
-            color: #2196F3;
-            text-align: center;
-        }
-        .result p {
-            margin: 5px 0;
-            font-size: 1.1em;
-            line-height: 1.5;
-            font-family: 'Arial', sans-serif;
-        }
-        .highlight {
-            font-weight: bold;
-            color: #4CAF50;
-        }
-        ul {
-            margin-top: 10px;
-            padding-left: 20px;
-            list-style-type: square;
-        }
-        .payment-item {
-            margin: 5px 0;
-            font-size: 1em;
-            background-color: #f0f8ff;
-            border-radius: 4px;
-            padding: 5px;
-            transition: background-color 0.3s;
-        }
-        .payment-item:hover {
-            background-color: #e0f7fa;
-        }
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
-            }
-            button {
-                padding: 10px;
-            }
-        }
-    </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
-</head>
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Calculadora de Préstamos MX</title>  
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Georgia:wght@400;700&display=swap" rel="stylesheet">  
+    <style>  
+        body {  
+            font-family: 'Roboto', sans-serif;  
+            background: linear-gradient(to right, #e0eafc, #cfdef3);  
+            margin: 0;  
+            padding: 20px;  
+        }  
 
-<body>
+        h1 {  
+            color: #333;  
+            text-align: center;  
+            margin-bottom: 20px;  
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);  
+        }  
 
-    <div class="container">
-        <h1>Calculadora de Préstamos</h1>
-        <label for="amount">Monto a Prestar:</label>
-        <input type="text" id="amount" placeholder="Ingrese el monto" required oninput="formatAmount(this)">
+        .container {  
+            background: white;  
+            border-radius: 10px;  
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);  
+            padding: 30px;  
+            max-width: 600px;  
+            margin: auto;  
+            transition: transform 0.2s;  
+        }  
 
-        <label for="interest">Tasa de Interés (% mensual):</label>
-        <input type="number" id="interest" value="10" placeholder="Ingrese la tasa de interés" required>
+        .container:hover {  
+            transform: scale(1.02);  
+        }  
 
-        <label for="weeks">Número de Semanas:</label>
-        <input type="number" id="weeks" placeholder="Ingrese el número de semanas" required>
+        label {  
+            font-weight: bold;  
+            margin-top: 10px;  
+            display: block;  
+            color: #555;  
+        }  
 
-        <button onclick="calculateLoan()">Calcular</button>
-        <button onclick="exportToPDF()">Exportar a PDF</button>
+        input {  
+            margin: 10px 0;  
+            padding: 12px;  
+            width: 100%;  
+            border: 1px solid #ccc;  
+            border-radius: 5px;  
+            box-sizing: border-box;  
+            transition: border-color 0.3s;  
+            font-size: 1.2em;  
+        }  
 
-        <div class="result">
-            <h2>Detalles del Préstamo</h2>
-            <p id="result"></p>
-            <h3>Cronograma de Pagos:</h3>
-            <ul id="paymentSchedule"></ul>
-        </div>
-    </div>
+        input:focus {  
+            border-color: #4CAF50;  
+            outline: none;  
+        }  
 
-    <script>
-        function formatCurrency(amount) {
-            return `MX$ ${amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
-        }
+        button {  
+            padding: 12px;  
+            background-color: #4CAF50;  
+            color: white;  
+            border: none;  
+            border-radius: 5px;  
+            cursor: pointer;  
+            width: 100%;  
+            margin-top: 10px;  
+            transition: background-color 0.3s;  
+        }  
 
-        function formatAmount(input) {
-            // Remover caracteres no numéricos
-            let value = input.value.replace(/[^0-9]/g, '');
-            // Formatear con comas
-            input.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
+        button:hover {  
+            background-color: #45a049;  
+        }  
 
-        function calculateLoan() {
-            const amount = parseFloat(document.getElementById('amount').value.replace(/,/g, '')); // Remover comas
-            const interestRate = parseFloat(document.getElementById('interest').value) / 100;
-            const weeks = parseInt(document.getElementById('weeks').value);
-            const months = weeks / 4;
+        .result {  
+            background-color: #e7f3fe;  
+            border-left: 6px solid #2196F3;  
+            padding: 15px;  
+            margin: 20px 0;  
+            border-radius: 5px;  
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);  
+            font-family: 'Georgia', serif;  
+        }  
 
-            const totalInterest = amount * interestRate * months;
-            const totalAmount = amount + totalInterest;
-            const weeklyPayment = totalAmount / weeks;
+        .result h2 {  
+            margin: 0;  
+            font-size: 1.5em;  
+            color: #2196F3;  
+            text-align: center;  
+        }  
 
-            document.getElementById('result').innerHTML = 
-                `Total a Pagar: <span class="highlight">${formatCurrency(totalAmount)}</span><br>` +
-                `Interés Cobrado: <span class="highlight">${formatCurrency(totalInterest)}</span><br>` +
-                `Pago Semanal: <span class="highlight">${formatCurrency(weeklyPayment)}</span><br>` +
-                `Tasa de Interés: <span class="highlight">${(interestRate * 100).toFixed(2)}%</span> mensual`;
+        .result p {  
+            margin: 5px 0;  
+            font-size: 1.1em;  
+            line-height: 1.5;  
+            font-family: 'Arial', sans-serif;  
+        }  
 
-            generatePaymentSchedule(weeks);
-        }
+        .highlight {  
+            font-weight: bold;  
+            color: #4CAF50;  
+        }  
 
-        function generatePaymentSchedule(weeks) {
-            const paymentSchedule = document.getElementById('paymentSchedule');
-            paymentSchedule.innerHTML = ''; // Limpiar lista anterior
-            const today = new Date();
+        ul {  
+            margin-top: 10px;  
+            padding-left: 20px;  
+            list-style-type: square;  
+        }  
+
+        .payment-item {  
+            margin: 5px 0;  
+            font-size: 1em;  
+            background-color: #f0f8ff;  
+            border-radius: 4px;  
+            padding: 5px;  
+            transition: background-color 0.3s;  
+        }  
+
+        .payment-item:hover {  
+            background-color: #e0f7fa;  
+        }  
+
+        @media (max-width: 600px) {  
+            .container {  
+                padding: 20px;  
+            }  
+
+            button {  
+                padding: 10px;  
+            }  
+        }  
+    </style>  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>  
+</head>  
+
+<body>  
+
+    <div class="container">  
+        <h1>Calculadora de Préstamos</h1>  
+        
+        <!-- Contenedor para la fecha actual -->  
+        <div id="current-date" style="text-align: center; font-size: 1.2em; margin-bottom: 20px;"></div>  
+        
+        <!-- Campo para seleccionar una fecha -->  
+        <label for="dateInput">Seleccionar Fecha:</label>  
+        <input type="date" id="dateInput" onchange="updateDate()">  
+
+        <label for="amount">Monto a Prestar:</label>  
+        <input type="text" id="amount" placeholder="Ingrese el monto" required oninput="formatAmount(this)">  
+
+        <label for="interest">Tasa de Interés (% mensual):</label>  
+        <input type="number" id="interest" value="10" placeholder="Ingrese la tasa de interés" required>  
+
+        <label for="weeks">Número de Semanas:</label>  
+        <input type="number" id="weeks" placeholder="Ingrese el número de semanas" required>  
+
+        <button onclick="calculateLoan()">Calcular</button>  
+        <button onclick="exportToPDF()">Exportar a PDF</button>  
+
+        <div class="result">  
+            <h2>Detalles del Préstamo</h2>  
+            <p id="result"></p>  
+            <h3>Cronograma de Pagos:</h3>  
+            <ul id="paymentSchedule"></ul>  
+        </div>  
+    </div>  
+
+    <script>  
+        let selectedDate;  
+
+        // Mostrar la fecha actual  
+        function displayCurrentDate() {  
+            const today = new Date();  
+            selectedDate = today; // Inicializar con la fecha actual  
+            updateDateDisplay();  
+        }  
+
+        function updateDate() {  
+            const dateInput = document.getElementById('dateInput').value;  
+            selectedDate = new Date(dateInput + 'T00:00:00'); // Asegurarse de que la fecha esté en la zona horaria local  
+            updateDateDisplay();  
+        }  
+
+        function updateDateDisplay() {  
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };  
+            document.getElementById('current-date').innerText = `Fecha Seleccionada: ${selectedDate.toLocaleDateString('es-MX', options)}`;  
+        }  
+
+        function formatCurrency(amount) {  
+            return `MX$ ${amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;  
+        }  
+
+        function formatAmount(input) {  
+            // Remover caracteres no numéricos  
+            let value = input.value.replace(/[^0-9]/g, '');  
+            // Formatear con comas  
+            input.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");  
+        }  
+
+        function calculateLoan() {  
+            const amount = parseFloat(document.getElementById('amount').value.replace(/,/g, '')); // Remover comas  
+            const interestRate = parseFloat(document.getElementById('interest').value) / 100;  
+            const weeks = parseInt(document.getElementById('weeks').value);  
+            const months = weeks / 4;  
+
+            const totalInterest = amount * interestRate * months;  
+            const totalAmount = amount + totalInterest;  
+            const weeklyPayment = totalAmount / weeks;  
+
+            document.getElementById('result').innerHTML =   
+                `Total a Pagar: <span class="highlight">${formatCurrency(totalAmount)}</span><br>` +  
+                `Interés Cobrado: <span class="highlight">${formatCurrency(totalInterest)}</span><br>` +  
+                `Pago Semanal: <span class="highlight">${formatCurrency(weeklyPayment)}</span><br>` +  
+                `Tasa de Interés: <span class="highlight">${(interestRate * 100).toFixed(2)}%</span> mensual`;  
+
+            generatePaymentSchedule(weeks);  
+        }  
+
+        function generatePaymentSchedule(weeks) {  
+            const paymentSchedule = document.getElementById('paymentSchedule');  
+            paymentSchedule.innerHTML = ''; // Limpiar lista anterior  
             
-            for (let i = 1; i <= weeks; i++) {
-                const paymentDate = new Date(today);
-                paymentDate.setDate(today.getDate() + (i * 7)); // Sumar 7 días por cada semana
-                paymentSchedule.innerHTML += `<li class="payment-item">Pago ${i}: ${paymentDate.toLocaleDateString()}</li>`;
-            }
-        }
+            for (let i = 1; i <= weeks; i++) {  
+                const paymentDate = new Date(selectedDate);  
+                paymentDate.setDate(selectedDate.getDate() + (i * 7)); // Sumar 7 días por cada semana  
+                paymentSchedule.innerHTML += `<li class="payment-item">Pago ${i}: ${paymentDate.toLocaleDateString()}</li>`;  
+            }  
+        }  
 
-        function exportToPDF() {
-            const doc = new jsPDF();
-            const resultText = document.getElementById('result').innerHTML.split('<br>').map(line => line.replace(/<span class="highlight">/g, '').replace(/<\/span>/g, ''));
-            const paymentSchedule = document.getElementById('paymentSchedule').innerHTML.replace(/<li class="payment-item">/g, '').replace(/<\/li>/g, '\n');
+        function exportToPDF() {  
+            const doc = new jsPDF();  
+            const resultText = document.getElementById('result').innerHTML.split('<br>').map(line => line.replace(/<span class="highlight">/g, '').replace(/<\/span>/g, ''));  
+            const paymentSchedule = document.getElementById('paymentSchedule').innerHTML.replace(/<li class="payment-item">/g, '').replace(/<\/li>/g, '\n');  
 
-            doc.text('Detalles del Préstamo', 10, 10);
-            resultText.forEach((line, index) => {
-                doc.text(line, 10, 20 + (index * 10));
-            });
-            doc.text('Cronograma de Pagos:', 10, 20 + (resultText.length * 10));
-            const scheduleLines = paymentSchedule.split('\n');
-            scheduleLines.forEach((line, index) => {
-                doc.text(line, 10, 30 + (resultText.length * 10) + (index * 10));
-            });
+            doc.text('Detalles del Préstamo', 10, 10);  
+            resultText.forEach((line, index) => {  
+                doc.text(line, 10, 20 + (index * 10));  
+            });  
+            doc.text('Cronograma de Pagos:', 10, 20 + (resultText.length * 10));  
+            const scheduleLines = paymentSchedule.split('\n');  
+            scheduleLines.forEach((line, index) => {  
+                doc.text(line, 10, 30 + (resultText.length * 10) + (index * 10));  
+            });  
 
-            doc.save('prestamo_detalles.pdf');
-        }
-    </script>
+            doc.save('prestamo_detalles.pdf');  
+        }  
 
-</body>
+        // Llamar a la función para mostrar la fecha actual al cargar la página  
+        window.onload = displayCurrentDate;  
+    </script>  
+
+</body>  
 
 </html>
